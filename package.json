@@ -1,0 +1,42 @@
+{
+  "name": "@polyrize/nanospace",
+  "version": "1.0.0",
+  "description": "A data layer for a statefull application. Following a reactive-programming design",
+  "main": "index.js",
+  "dependencies": {},
+  "devDependencies": {
+    "babel-eslint": "^10.1.0",
+    "eslint": "^7.32.0",
+    "eslint-config-standard": "^16.0.3",
+    "eslint-plugin-import": "^2.24.2",
+    "eslint-plugin-jest": "^24.4.0",
+    "eslint-plugin-jsx-a11y": "^6.4.1",
+    "eslint-plugin-node": "^11.1.0",
+    "eslint-plugin-promise": "^5.1.0",
+    "eslint-plugin-standard": "^5.0.0",
+    "jest": "^27.1.1",
+    "jest-circus": "^27.1.1"
+  },
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/Motistudio/nanospace.git"
+  },
+  "keywords": [
+    "data",
+    "layer",
+    "state",
+    "atom",
+    "selector",
+    "realm",
+    "subscribe"
+  ],
+  "author": "Moti Shriki",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/Motistudio/nanospace/issues"
+  },
+  "homepage": "https://github.com/Motistudio/nanospace#readme"
+}
