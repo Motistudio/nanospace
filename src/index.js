@@ -1,7 +1,7 @@
 /**
  * Generates an atom
  */
-const atom = () => {}
+const atom = (options, dependencies) => {}
 
 /**
  * Generates a selector

@@ -2,7 +2,7 @@
   "name": "@polyrize/nanospace",
   "version": "1.0.0",
   "description": "A data layer for a statefull application. Following a reactive-programming design",
-  "main": "index.js",
+  "main": "src/index.js",
   "scripts": {
     "test": "jest --env=node --coverage=true",
     "jsdoc": "jsdoc index.js -t ./node_modules/clean-jsdoc-theme"
