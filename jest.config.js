@@ -14,6 +14,8 @@ module.exports = {
   // Automatically clear mock calls and instances between every test
   clearMocks: true,
 
+  injectGlobals: true,
+
   // Indicates whether the coverage information should be collected while executing the test
   // collectCoverage: false,
 
@@ -77,17 +79,13 @@ module.exports = {
   // ],
 
   // A map from regular expressions to module names or to arrays of module names that allow to stub out resources with a single module
-  moduleNameMapper: {
-    '\\.(css|less|scss|sss|styl)$': '<rootDir>/node_modules/jest-css-modules'
-  },
+  // moduleNameMapper: {
+  //   '\\.(css|less|scss|sss|styl)$': '<rootDir>/node_modules/jest-css-modules'
+  // },
 
-  transform: {
-    '\\.(gql|graphql)$': 'jest-transform-graphql',
-    '\\.svg$': 'svg-jest',
-    '\\.jsx$': 'babel-jest',
-    '\\.js$': 'babel-jest',
-    '\\.(css|scss|less)$': 'jest-transform-scss'
-  },
+  // transform: {
+  //   '\\.js$': 'babel-jest'
+  // },
 
   // An array of regexp pattern strings, matched against all module paths before considered 'visible' to the module loader
   // modulePathIgnorePatterns: [
@@ -136,7 +134,7 @@ module.exports = {
   // setupFiles: [],
 
   // A list of paths to modules that run some code to configure or set up the testing framework before each test
-  setupFilesAfterEnv: ['<rootDir>tests/config/integration/setup.js'],
+  // setupFilesAfterEnv: ['<rootDir>tests/config/integration/setup.js'],
 
   // The number of seconds after which a test is considered as slow and reported as such in the results.
   // slowTestThreshold: 5,
@@ -154,10 +152,10 @@ module.exports = {
   // testLocationInResults: false,
 
   // The glob patterns Jest uses to detect test files
-  // testMatch: [
-  //   "**/__tests__/**/*.[jt]s?(x)",
-  //   "**/?(*.)+(spec|test).[tj]s?(x)"
-  // ],
+  testMatch: [
+    // '**/__tests__/**/*.[jt]s?(x)',
+    '**/test/**/*.spec.js'
+  ]
 
   // An array of regexp pattern strings that are matched against all test paths, matched tests are skipped
   // testPathIgnorePatterns: [
@@ -183,9 +181,7 @@ module.exports = {
   // transform: undefined,
 
   // An array of regexp pattern strings that are matched against all source file paths, matched files will skip transformation
-  transformIgnorePatterns: [
-    '/node_modules/(?!@polyrize/fe-)/'
-  ]
+  // transformIgnorePatterns: []
 
   // An array of regexp pattern strings that are matched against all modules before the module loader will automatically return a mock for them
   // unmockedModulePathPatterns: undefined,

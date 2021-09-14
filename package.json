@@ -3,6 +3,9 @@
   "version": "1.0.0",
   "description": "A data layer for a statefull application. Following a reactive-programming design",
   "main": "index.js",
+  "scripts": {
+    "test": "jest --env=node"
+  },
   "dependencies": {},
   "devDependencies": {
     "babel-eslint": "^10.1.0",
@@ -16,9 +19,6 @@
     "eslint-plugin-standard": "^5.0.0",
     "jest": "^27.1.1",
     "jest-circus": "^27.1.1"
-  },
-  "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1"
   },
   "repository": {
     "type": "git",
