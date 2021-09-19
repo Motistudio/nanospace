@@ -32,11 +32,12 @@ class Atom extends Subscribable {
   /**
    * @constructs Atom
    * @param {*?} options - an options object
+   * @param {Array} dependencies - An array of dependencies
    */
-  constructor (options) {
+  constructor (options, dependencies = []) {
     super(options)
-    const {dependencies, getValue, getInitialValue} = {...defaultOptions, ...options}
-    this.value = getInitialValue()
+    const {getValue, getInitialValue} = {...defaultOptions, ...options}
+    this.current = getInitialValue()
     this.dependencies = dependencies
     this.getValue = getValue
     this.subscribable = new Emitter()
@@ -45,12 +46,11 @@ class Atom extends Subscribable {
   /**
    * Evaluates the value of the atom by the dependencies
    *
-   * @param {*} dependencies - the atom's dependencies
    * @returns {*|Promise} - either a value or a promise
    */
-  value (dependencies) {
-    this.value = this.getValue(...dependencies)
-    return this.value
+  value () {
+    this.current = this.getValue(...this.dependencies)
+    return this.current
   }
 
   /**

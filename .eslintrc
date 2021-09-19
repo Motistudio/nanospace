@@ -67,5 +67,12 @@
     }],
     "jsdoc/require-param": 2
   },
-  "overrides": []
+  "overrides": [
+    {
+      "files": ["test/**/*.spec.js"],
+      "rules": {
+        "jsdoc/require-jsdoc": 0
+      }
+    }
+  ]
 }
