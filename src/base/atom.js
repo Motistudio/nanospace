@@ -22,14 +22,15 @@ const defaultOptions = {
 }
 
 /**
- * @class Atom
+ * @name Atom
+ * @class
  * @namespace Base
  * @implements {Subscribable}
  * @description Creates a basic atom
  */
 class Atom extends Subscribable {
   /**
-   * @constructs
+   * @constructs Atom
    * @param {*?} options - an options object
    */
   constructor (options) {

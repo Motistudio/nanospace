@@ -1,6 +1,7 @@
 /**
  * @interface Subscribable
- * Enables the basic API of subscribing and triggering
+ * @namespace Base
+ * @description Enables the basic API of subscribing and triggering
  */
 class Subscribable {
   /**

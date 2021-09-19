@@ -3,6 +3,7 @@ const Subscribable = require('./subscribable')
 /**
  * @name unsubscribe
  * @private
+ * @this Emitter
  * @description Unsubscribes a function from the collection
  * @param {Function} callback - a callback to unsubscribe
  */
@@ -14,14 +15,17 @@ const unsubscribe = function (callback) {
 }
 
 /**
- * @class Emitter
+ * @name Emitter
+ * @class
  * @namespace Base
  * @implements {Subscribable}
- * Enables the basic API of subscribing and triggering
+ * @description Creates an emitter of a single value
+ * @requires Subscribable
  */
 class Emitter extends Subscribable {
   /**
-   * @constructs
+   * @constructs Emitter
+   * @param {...*?} args - Any number of arguments. It proxys them into the base class and doesn't use them
    */
   constructor (...args) {
     super(...args)
@@ -29,7 +33,6 @@ class Emitter extends Subscribable {
   }
 
   /**
-   * @name trigger
    * @description Triggers the subscriptions and invokes them
    * @param {*} value - a value for the subscriptions
    */
@@ -38,7 +41,6 @@ class Emitter extends Subscribable {
   }
 
   /**
-   * @name subscribe
    * @description Subscribes to updates
    * @param {Function} callback - a callback for subscription updates
    * @returns {Function} - an unsubscribe function
