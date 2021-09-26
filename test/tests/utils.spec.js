@@ -1,5 +1,7 @@
-const Atom = require('../../../src/base/atom')
-const {isThenable, evaluate} = require('../../../src/base/utils')
+const Atom = require('../../src/base/atom')
+const isThenable = require('../../src/utils/isThenable')
+const evaluate = require('../../src/utils/evaluate')
+const perform = require('../../src/utils/perform')
 
 describe('Utils', () => {
   describe('isThenable', () => {
@@ -29,6 +31,7 @@ describe('Utils', () => {
     const syncedAtoms = values.map((value) => new Atom({getValue: () => value}))
     const asyncValues = [0, 3, ...values.map(v => Promise.resolve(v))]
     const asyncedAtoms = asyncValues.map((value) => new Atom({getValue: () => value}))
+
     test('Should evaluate primitive values', () => {
       const evaluatedValues = evaluate(syncedAtoms)
       expect(Array.isArray(evaluatedValues)).toBe(true)
@@ -43,6 +46,27 @@ describe('Utils', () => {
       // check the other stuff
       expect(Array.isArray(evaluatedValues)).toBe(true)
       expect(evaluatedValues).toMatchObject([0, 3, ...values])
+    })
+  })
+
+  describe('Perform', () => {
+    test('Should perform a sync action on a sync value', () => {
+      const value = 'test value'
+      const callback = jest.fn()
+      const returnValue = perform(value)(callback)
+      expect(isThenable(returnValue)).toBe(false)
+      expect(callback).toHaveBeenCalledWith(value)
+    })
+
+    test('Should perform an async action on a sync value', async () => {
+      const baseValue = 'test value'
+      const value = Promise.resolve(baseValue)
+      const callback = jest.fn(arg => arg)
+      const returnValue = perform(value)(callback)
+      expect(isThenable(returnValue)).toBe(true)
+      const actualReturnValue = await returnValue
+      expect(callback).toHaveBeenCalledWith(baseValue)
+      expect(actualReturnValue).toBe(baseValue)
     })
   })
 })

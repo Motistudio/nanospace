@@ -1,5 +1,8 @@
 const Subscribable = require('./subscribable')
 const Emitter = require('./emitter')
+const perform = require('../utils/perform')
+const evaluate = require('../utils/evaluate')
+// const isThenable = require('../utils/isThenable')
 
 /**
  * @name getDefaultValue
@@ -10,6 +13,21 @@ const Emitter = require('./emitter')
 const getDefaultValue = () => undefined
 
 /**
+ * Resolves the value of a dependencies and a getter
+ *
+ * @private
+ * @param {Array} dependencies - an array of dependencies
+ * @param {Function} getValue - a getter for a value
+ * @returns {Promise|*} - either a promise or a definitive value
+ */
+const resolveValue = function (dependencies, getValue) {
+  return perform(evaluate(dependencies))((value) => {
+    // this.current = getValue(value)
+    return getValue(value)
+  })
+}
+
+/**
  * @name defaultOptions
  * @private
  * @constant
@@ -18,7 +36,7 @@ const getDefaultValue = () => undefined
 const defaultOptions = {
   dependencies: [],
   getValue: getDefaultValue,
-  getInitialValue: getDefaultValue
+  getInitialValue: null
 }
 
 /**
@@ -37,8 +55,8 @@ class Atom extends Subscribable {
   constructor (options, dependencies = []) {
     super(options)
     const {getValue, getInitialValue} = {...defaultOptions, ...options}
-    this.current = getInitialValue()
-    this.dependencies = dependencies
+    this.current = resolveValue.call(this, dependencies, getInitialValue || getValue)
+    this.dependencies = dependencies || []
     this.getValue = getValue
     this.subscribable = new Emitter()
   }
@@ -49,7 +67,7 @@ class Atom extends Subscribable {
    * @returns {*|Promise} - either a value or a promise
    */
   value () {
-    this.current = this.getValue(...this.dependencies)
+    this.current = resolveValue.call(this, this.dependencies, this.getValue)
     return this.current
   }
 
