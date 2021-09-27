@@ -2,6 +2,7 @@ const Atom = require('../../src/base/atom')
 const isThenable = require('../../src/utils/isThenable')
 const evaluate = require('../../src/utils/evaluate')
 const perform = require('../../src/utils/perform')
+const defer = require('../../src/utils/defer')
 
 describe('Utils', () => {
   describe('isThenable', () => {
@@ -26,7 +27,7 @@ describe('Utils', () => {
     })
   })
 
-  describe('Evaluate', () => {
+  describe('evaluate', () => {
     const values = [0, 10, 15]
     const syncedAtoms = values.map((value) => new Atom({getValue: () => value}))
     const asyncValues = [0, 3, ...values.map(v => Promise.resolve(v))]
@@ -49,7 +50,7 @@ describe('Utils', () => {
     })
   })
 
-  describe('Perform', () => {
+  describe('perform', () => {
     test('Should perform a sync action on a sync value', () => {
       const value = 'test value'
       const callback = jest.fn()
@@ -67,6 +68,20 @@ describe('Utils', () => {
       const actualReturnValue = await returnValue
       expect(callback).toHaveBeenCalledWith(baseValue)
       expect(actualReturnValue).toBe(baseValue)
+    })
+  })
+
+  describe('defer', () => {
+    test('Should resolve a promise', async () => {
+      const value = 'test value'
+      const deferred = defer()
+      expect(isThenable(deferred.promise)).toBe(true)
+      expect(typeof deferred.resolve).toBe('function')
+      expect(typeof deferred.reject).toBe('function')
+
+      deferred.resolve(value)
+      const result = await deferred.promise
+      expect(result).toBe(value)
     })
   })
 })

@@ -1,6 +1,6 @@
 const Subscribable = require('../../../src/base/subscribable')
 
-describe('Emitter', () => {
+describe('Subscribable', () => {
   test('Should create a new subscribable', () => {
     const observer = new Subscribable()
     expect(typeof observer).toBe('object')

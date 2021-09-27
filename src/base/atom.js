@@ -1,7 +1,9 @@
-const Subscribable = require('./subscribable')
+// const Subscribable = require('./subscribable')
+const Valuable = require('./valuable')
 const Emitter = require('./emitter')
 const perform = require('../utils/perform')
 const evaluate = require('../utils/evaluate')
+const defer = require('../utils/defer')
 // const isThenable = require('../utils/isThenable')
 
 /**
@@ -21,9 +23,19 @@ const getDefaultValue = () => undefined
  * @returns {Promise|*} - either a promise or a definitive value
  */
 const resolveValue = function (dependencies, getValue) {
+  this.isPending = true
+  const deferred = defer()
+  this.promise = deferred.promise
+  // evaluates the dependencies
   return perform(evaluate(dependencies))((value) => {
-    // this.current = getValue(value)
-    return getValue(value)
+    // evaluates the getter
+    return perform(getValue(value))((value) => {
+      deferred.resolve()
+      this.isPending = false
+      this.current = value
+      this.promise = null
+      return value
+    })
   })
 }
 
@@ -43,10 +55,10 @@ const defaultOptions = {
  * @name Atom
  * @class
  * @namespace Base
- * @implements {Subscribable}
+ * @implements {Valuable}
  * @description Creates a basic atom
  */
-class Atom extends Subscribable {
+class Atom extends Valuable {
   /**
    * @constructs Atom
    * @param {*?} options - an options object
@@ -55,10 +67,18 @@ class Atom extends Subscribable {
   constructor (options, dependencies = []) {
     super(options)
     const {getValue, getInitialValue} = {...defaultOptions, ...options}
-    this.current = resolveValue.call(this, dependencies, getInitialValue || getValue)
+
+    // dependencies control
     this.dependencies = dependencies || []
     this.getValue = getValue
     this.subscribable = new Emitter()
+
+    // state management
+    this.promise = null
+    this.isPending = false
+    this.error = null
+    this.current = null
+    resolveValue.call(this, dependencies, getInitialValue || getValue)
   }
 
   /**
@@ -67,8 +87,7 @@ class Atom extends Subscribable {
    * @returns {*|Promise} - either a value or a promise
    */
   value () {
-    this.current = resolveValue.call(this, this.dependencies, this.getValue)
-    return this.current
+    return resolveValue.call(this, this.dependencies, this.getValue)
   }
 
   /**

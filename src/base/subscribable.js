@@ -1,11 +1,11 @@
 /**
- * @interface Subscribable
- * @namespace Base
+ * An abstract class that represents an object that can be subscribed
+ *
+ * @interface
  * @description Enables the basic API of subscribing and triggering
  */
 class Subscribable {
   /**
-   * @name trigger
    * @description Triggers the subscriptions and invokes them
    * @param {*} value - a value for the subscriptions
    */
@@ -14,7 +14,6 @@ class Subscribable {
   }
 
   /**
-   * @name subscribe
    * @description Subscribes to updates
    * @param {Function} callback - a callback for subscription updates
    * @returns {Function} - an unsubscribe function
