@@ -5,7 +5,8 @@
   ],
   "compilerOptions": {
     "target": "ESNext",
-    "module": "ESNext",
+    "module": "CommonJS",
+    "moduleResolution": "Node",
     "rootDir": ".",
     "baseUrl": ".",
     "resolveJsonModule": true,

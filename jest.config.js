@@ -10,5 +10,5 @@ export default {
   testEnvironment: 'node',
   roots: ['<rootDir>'],
   modulePaths: [compilerOptions.baseUrl].filter(Boolean),
-  moduleNameMapper: pathsToModuleNameMapper(compilerOptions.paths)
+  moduleNameMapper: pathsToModuleNameMapper(compilerOptions.paths || {})
 }

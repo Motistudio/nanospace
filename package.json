@@ -3,6 +3,7 @@
   "version": "1.0.0",
   "description": "A robust state-management library",
   "main": "index.js",
+  "type": "module",
   "scripts": {
     "lint": "npx eslint",
     "test": "npx jest"
